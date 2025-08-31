@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Portfolio - [Ton Nom]</title>
+  <title>Portfolio - Ton Nom</title>
   <style>
     /* ========== Reset & style global ========== */
     * {
@@ -14,7 +14,7 @@
     body {
       font-family: Arial, sans-serif;
       line-height: 1.6;
-      background: #f9f9f9;
+      background: #f0f0f0; /* fond uni */
       color: #333;
       scroll-behavior: smooth;
     }
@@ -55,8 +55,6 @@
       align-items: center;
       height: 100vh;
       text-align: center;
-      background: #4CAF50;
-      color: white;
       flex-direction: column;
       padding: 0 20px;
     }
@@ -66,10 +64,11 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .typewriter {
-      border-right: 2px solid white;
+      border-right: 2px solid #333;
       white-space: nowrap;
       overflow: hidden;
       display: inline-block;
@@ -114,6 +113,18 @@
       background: #333;
       color: white;
     }
+
+    /* ========== Effet Scroll Reveal ========== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -135,13 +146,13 @@
   </section>
 
   <!-- À propos -->
-  <section id="about">
+  <section id="about" class="reveal">
     <h2>À propos</h2>
     <p>Je suis passionné par le développement et la technologie. Actuellement étudiant à l’EPITA et intéressé par [tes domaines].</p>
   </section>
 
   <!-- Compétences -->
-  <section id="skills">
+  <section id="skills" class="reveal">
     <h2>Compétences</h2>
     <ul>
       <li>HTML / CSS / JavaScript</li>
@@ -152,7 +163,7 @@
   </section>
 
   <!-- Projets -->
-  <section id="projects">
+  <section id="projects" class="reveal">
     <h2>Projets</h2>
     <div class="project">
       <h3>Projet 1</h3>
@@ -165,7 +176,7 @@
   </section>
 
   <!-- Contact -->
-  <section id="contact">
+  <section id="contact" class="reveal">
     <h2>Contact</h2>
     <p>📧 <a href="mailto:tonmail@example.com">tonmail@example.com</a></p>
     <p>🌐 <a href="https://github.com/tonpseudo" target="_blank">Mon GitHub</a></p>
@@ -173,22 +184,24 @@
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2025 [Ton Nom] - Portfolio</p>
+    <p>&copy; 2025 Ton Nom - Portfolio</p>
   </footer>
 
   <!-- ========== JS Typewriter ========== -->
   <script>
     const phrases = [
       "Étudiant à l’EPITA",
-      "Nathan VANATHATHAN !"  // Remplace par ton vrai nom
+      "Ton Nom" // Remplace par ton vrai nom
     ];
 
     const element = document.querySelector(".typewriter");
     let i = 0, j = 0;
     let current = [];
     let isDeleting = false;
+    let finished = false;
 
     function type() {
+      if (finished) return;
       element.innerHTML = current.join("");
 
       if (!isDeleting && j < phrases[i].length) {
@@ -208,12 +221,33 @@
       } 
       else if (isDeleting && j === 0) {
         isDeleting = false;
-        i++;  // passe à la phrase suivante
-        type();
+        i++;  
+        if (i < phrases.length) {
+          type();
+        } else {
+          finished = true; // stop après avoir écrit ton nom
+        }
       }
     }
 
     type();
+
+    // ========== JS Scroll Reveal ==========
+    function revealOnScroll() {
+      const reveals = document.querySelectorAll('.reveal');
+      for (let i = 0; i < reveals.length; i++) {
+        const windowHeight = window.innerHeight;
+        const elementTop = reveals[i].getBoundingClientRect().top;
+        const revealPoint = 100;
+
+        if (elementTop < windowHeight - revealPoint) {
+          reveals[i].classList.add('active');
+        }
+      }
+    }
+
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
   </script>
 
 </body>
