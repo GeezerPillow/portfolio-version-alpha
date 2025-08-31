@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Portfolio - [Ton Prénom]</title>
+  <title>Portfolio - [Ton Nom]</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -19,26 +19,25 @@
     }
 
     .typewriter {
-      border-right: 2px solid #333; /* curseur */
+      border-right: 2px solid #333; /* curseur clignotant */
       display: inline-block;
       white-space: nowrap;
       overflow: hidden;
+      padding-left: 8px;
     }
   </style>
 </head>
 <body>
-  <h1><span class="typewriter"></span></h1>
+  <h1>Bienvenue, je suis<span class="typewriter"></span></h1>
 
   <script>
     const phrases = [
-      "Bienvenue,",
-      "Je suis [Ton prénom]",
-      "Développeur passionné",
-      "Créatif & motivé"
+      " Étudiant à l’EPITA !",
+      " Nathan VANATHATHAN !"
     ];
 
-    let i = 0;      // phrase en cours
-    let j = 0;      // position de la lettre
+    let i = 0;
+    let j = 0;
     let currentPhrase = [];
     let isDeleting = false;
     let isEnd = false;
@@ -48,7 +47,6 @@
       document.querySelector(".typewriter").innerHTML = currentPhrase.join("");
 
       if (i < phrases.length) {
-
         if (!isDeleting && j <= phrases[i].length) {
           currentPhrase.push(phrases[i][j]);
           j++;
@@ -59,7 +57,7 @@
           j--;
         }
 
-        if (j == phrases[i].length) {
+        if (j === phrases[i].length) {
           isEnd = true;
           isDeleting = true;
         }
@@ -69,7 +67,7 @@
           isDeleting = false;
           i++;
           if (i === phrases.length) {
-            i = 0;
+            i = 0; // repart au début si tu veux une boucle infinie
           }
         }
       }
