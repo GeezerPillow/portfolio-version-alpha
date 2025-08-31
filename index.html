@@ -2,46 +2,189 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Portfolio - Nathan VANATHATHAN</title>
+  <title>Portfolio - [Ton Nom]</title>
   <style>
+    /* ========== Reset & style global ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
+      line-height: 1.6;
       background: #f9f9f9;
+      color: #333;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ========== En-tête / navbar ========== */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    header nav a {
+      margin: 0 15px;
+      font-weight: bold;
+      color: #333;
+      transition: color 0.3s;
+    }
+
+    header nav a:hover {
+      color: #4CAF50;
+    }
+
+    /* ========== Hero / accueil ========== */
+    section.hero {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
+      text-align: center;
+      background: #4CAF50;
+      color: white;
+      flex-direction: column;
+      padding: 0 20px;
     }
 
-    h1 {
-      font-size: 2em;
-      color: #333;
+    section.hero h1 {
+      font-size: 2.5em;
       display: flex;
+      justify-content: center;
       align-items: center;
     }
 
     .typewriter {
-      border-right: 2px solid #333; /* curseur clignotant */
+      border-right: 2px solid white;
       white-space: nowrap;
       overflow: hidden;
       display: inline-block;
-      margin-left: 5px; /* espace après "Bienvenue, je suis" */
+      margin-left: 5px;
+    }
+
+    /* ========== Sections ========== */
+    section {
+      padding: 80px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #4CAF50;
+      border-bottom: 2px solid #4CAF50;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    /* ========== Projets ========== */
+    .project {
+      background: white;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* ========== Contact ========== */
+    .contact a {
+      color: #4CAF50;
+      font-weight: bold;
+    }
+
+    /* ========== Footer ========== */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #333;
+      color: white;
     }
   </style>
 </head>
 <body>
-  <h1>Bienvenue, je suis<span class="typewriter"></span></h1>
 
+  <!-- Navbar -->
+  <header>
+    <nav>
+      <a href="#about">À propos</a>
+      <a href="#skills">Compétences</a>
+      <a href="#projects">Projets</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero / Accueil -->
+  <section class="hero">
+    <h1>Bienvenue, je suis<span class="typewriter"></span></h1>
+    <p>Portfolio personnel</p>
+  </section>
+
+  <!-- À propos -->
+  <section id="about">
+    <h2>À propos</h2>
+    <p>Je suis passionné par le développement et la technologie. Actuellement étudiant à l’EPITA et intéressé par [tes domaines].</p>
+  </section>
+
+  <!-- Compétences -->
+  <section id="skills">
+    <h2>Compétences</h2>
+    <ul>
+      <li>HTML / CSS / JavaScript</li>
+      <li>Python</li>
+      <li>Git / GitHub</li>
+      <li>[Autres compétences]</li>
+    </ul>
+  </section>
+
+  <!-- Projets -->
+  <section id="projects">
+    <h2>Projets</h2>
+    <div class="project">
+      <h3>Projet 1</h3>
+      <p>Description rapide du projet.</p>
+    </div>
+    <div class="project">
+      <h3>Projet 2</h3>
+      <p>Description rapide du projet.</p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>📧 <a href="mailto:tonmail@example.com">tonmail@example.com</a></p>
+    <p>🌐 <a href="https://github.com/tonpseudo" target="_blank">Mon GitHub</a></p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 [Ton Nom] - Portfolio</p>
+  </footer>
+
+  <!-- ========== JS Typewriter ========== -->
   <script>
     const phrases = [
-      "Étudiant à l’EPITA !",
-      "Nathan VANATHATHAN"
+      "Étudiant à l’EPITA",
+      "[Ton Nom]"  // Remplace par ton vrai nom
     ];
 
     const element = document.querySelector(".typewriter");
-    let i = 0;      // phrase en cours
-    let j = 0;      // position lettre
+    let i = 0, j = 0;
     let current = [];
     let isDeleting = false;
 
@@ -54,7 +197,6 @@
         setTimeout(type, 100);
       } 
       else if (!isDeleting && j === phrases[i].length) {
-        // Petite pause avant d’effacer la première phrase
         if (i === 0) {
           setTimeout(() => { isDeleting = true; type(); }, 1500);
         }
@@ -66,12 +208,13 @@
       } 
       else if (isDeleting && j === 0) {
         isDeleting = false;
-        i++;
+        i++;  // passe à la phrase suivante
         type();
       }
     }
 
     type();
   </script>
+
 </body>
 </html>
