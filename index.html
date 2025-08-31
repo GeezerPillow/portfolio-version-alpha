@@ -11,19 +11,22 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
     }
 
     h1 {
       font-size: 2em;
       color: #333;
+      display: flex;
+      align-items: center;
     }
 
     .typewriter {
       border-right: 2px solid #333; /* curseur clignotant */
-      display: inline-block;
       white-space: nowrap;
       overflow: hidden;
-      padding-left: 8px;
+      display: inline-block;
+      margin-left: 5px; /* espace après "Bienvenue, je suis" */
     }
   </style>
 </head>
@@ -32,51 +35,43 @@
 
   <script>
     const phrases = [
-      " Étudiant à l’EPITA !",
-      " Nathan VANATHATHAN !"
+      "Étudiant à l’EPITA",
+      "[Ton Nom]"  // Remplace par ton vrai nom
     ];
 
-    let i = 0;
-    let j = 0;
-    let currentPhrase = [];
+    const element = document.querySelector(".typewriter");
+    let i = 0;      // phrase en cours
+    let j = 0;      // position lettre
+    let current = [];
     let isDeleting = false;
-    let isEnd = false;
 
-    function loop() {
-      isEnd = false;
-      document.querySelector(".typewriter").innerHTML = currentPhrase.join("");
+    function type() {
+      element.innerHTML = current.join("");
 
-      if (i < phrases.length) {
-        if (!isDeleting && j <= phrases[i].length) {
-          currentPhrase.push(phrases[i][j]);
-          j++;
+      if (!isDeleting && j < phrases[i].length) {
+        current.push(phrases[i][j]);
+        j++;
+        setTimeout(type, 100);
+      } 
+      else if (!isDeleting && j === phrases[i].length) {
+        // Petite pause avant d’effacer la première phrase
+        if (i === 0) {
+          setTimeout(() => { isDeleting = true; type(); }, 1500);
         }
-
-        if (isDeleting && j <= phrases[i].length) {
-          currentPhrase.pop();
-          j--;
-        }
-
-        if (j === phrases[i].length) {
-          isEnd = true;
-          isDeleting = true;
-        }
-
-        if (isDeleting && j === 0) {
-          currentPhrase = [];
-          isDeleting = false;
-          i++;
-          if (i === phrases.length) {
-            i = 0; // repart au début si tu veux une boucle infinie
-          }
-        }
+      } 
+      else if (isDeleting && j > 0) {
+        current.pop();
+        j--;
+        setTimeout(type, 50);
+      } 
+      else if (isDeleting && j === 0) {
+        isDeleting = false;
+        i++;  // passe à la phrase suivante
+        type();
       }
-
-      const speed = isEnd ? 1500 : isDeleting ? 50 : 100;
-      setTimeout(loop, speed);
     }
 
-    loop();
+    type();
   </script>
 </body>
 </html>
